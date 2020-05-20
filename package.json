@@ -336,8 +336,12 @@
                     "scope": "window"
                 },
                 "julia.lint.run": {
-                    "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "on",
+                    "enum": [
+                        "on",
+                        "off"
+                    ],
                     "description": "Run the linter on active files."
                 },
                 "julia.lint.missingrefs": {
@@ -351,53 +355,94 @@
                     "description": "Highlight unknown symbols. The `symbols` option will not mark unknown fields."
                 },
                 "julia.lint.call": {
-                    "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "on",
+                    "enum": [
+                        "on",
+                        "off"
+                    ],
                     "description": "This compares  call signatures against all known methods for the called function. Calls with too many or too few arguments, or unknown keyword parameters are highlighted."
                 },
                 "julia.lint.iter": {
-                    "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "on",
+                    "enum": [
+                        "on",
+                        "off"
+                    ],
                     "description": "Check iterator syntax of loops. Will identify, for example, attempts to iterate over single values."
                 },
                 "julia.lint.nothingcomp": {
-                    "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "on",
+                    "enum": [
+                        "on",
+                        "off"
+                    ],
                     "description": "Check for use of `==` rather than `===` when comparing against `nothing`. "
                 },
                 "julia.lint.constif": {
-                    "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "on",
+                    "enum": [
+                        "on",
+                        "off"
+                    ],
                     "description": "Check for constant conditionals in if statements that result in branches never being reached.."
                 },
                 "julia.lint.lazy": {
-                    "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "on",
+                    "enum": [
+                        "on",
+                        "off"
+                    ],
                     "description": "Check for deterministic lazy boolean operators."
                 },
                 "julia.lint.datadecl": {
-                    "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "on",
+                    "enum": [
+                        "on",
+                        "off"
+                    ],
                     "description": "Check variables used in type declarations are datatypes."
                 },
                 "julia.lint.typeparam": {
-                    "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "on",
+                    "enum": [
+                        "on",
+                        "off"
+                    ],
                     "description": "Check parameters declared in `where` statements or datatype declarations are used."
                 },
                 "julia.lint.modname": {
-                    "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "on",
+                    "enum": [
+                        "on",
+                        "off"
+                    ],
                     "description": "Check submodule names do not shadow their parent's name."
                 },
                 "julia.lint.pirates": {
-                    "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "on",
+                    "enum": [
+                        "on",
+                        "off"
+                    ],
                     "description": "Check for type piracy - the overloading of external functions with methods specified for external datatypes. 'External' here refers to imported code."
                 },
                 "julia.lint.useoffuncargs": {
                     "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "on",
+                    "enum": [
+                        "on",
+                        "off"
+                    ],
                     "description": "Check that all declared arguments are used within the function body."
                 },
                 "julia.enableCrashReporter": {
@@ -474,56 +519,92 @@
                     "scope": "window"
                 },
                 "julia.format.indents": {
-                    "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "on",
+                    "enum": [
+                        "on",
+                        "off"
+                    ],
                     "description": "Format file indents.",
                     "scope": "window"
                 },
                 "julia.format.ops": {
-                    "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "on",
+                    "enum": [
+                        "on",
+                        "off"
+                    ],
                     "description": "Format whitespace around operators.",
                     "scope": "window"
                 },
                 "julia.format.tuples": {
-                    "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "on",
+                    "enum": [
+                        "on",
+                        "off"
+                    ],
                     "description": "Format tuples.",
                     "scope": "window"
                 },
                 "julia.format.curly": {
-                    "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "on",
+                    "enum": [
+                        "on",
+                        "off"
+                    ],
                     "description": "Format braces.",
                     "scope": "window"
                 },
                 "julia.format.calls": {
-                    "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "on",
+                    "enum": [
+                        "on",
+                        "off"
+                    ],
                     "description": "Format function calls.",
                     "scope": "window"
                 },
                 "julia.format.iterOps": {
-                    "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "on",
+                    "enum": [
+                        "on",
+                        "off"
+                    ],
                     "description": "Format loop iterators.",
                     "scope": "window"
                 },
                 "julia.format.comments": {
-                    "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "on",
+                    "enum": [
+                        "on",
+                        "off"
+                    ],
                     "description": "Format comments.",
                     "scope": "window"
                 },
                 "julia.format.docs": {
-                    "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "on",
+                    "enum": [
+                        "on",
+                        "off"
+                    ],
                     "description": "Format inline documentation.",
                     "scope": "window"
                 },
                 "julia.format.kw": {
-                    "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "on",
+                    "enum": [
+                        "on",
+                        "off"
+                    ],
                     "description": "Remove spaces around = in function keywords.",
                     "scope": "window"
                 }
