@@ -379,7 +379,7 @@
                         "on",
                         "off"
                     ],
-                    "description": "Check for use of `==` rather than `===` when comparing against `nothing`. "
+                    "description": "Check for use of `==` rather than `===` when comparing against `nothing`."
                 },
                 "julia.lint.constif": {
                     "type": "string",
@@ -388,7 +388,7 @@
                         "on",
                         "off"
                     ],
-                    "description": "Check for constant conditionals in if statements that result in branches never being reached.."
+                    "description": "Check for constant conditionals in if statements that result in branches never being reached."
                 },
                 "julia.lint.lazy": {
                     "type": "string",
@@ -406,7 +406,7 @@
                         "on",
                         "off"
                     ],
-                    "description": "Check variables used in type declarations are datatypes."
+                    "description": "Check variables used in type declarations are DataTypes."
                 },
                 "julia.lint.typeparam": {
                     "type": "string",
@@ -436,7 +436,6 @@
                     "description": "Check for type piracy - the overloading of external functions with methods specified for external datatypes. 'External' here refers to imported code."
                 },
                 "julia.lint.useoffuncargs": {
-                    "type": "boolean",
                     "type": "string",
                     "default": "on",
                     "enum": [
