@@ -7,17 +7,9 @@ include("../error_handler.jl")
 
 include("../terminalserver/repl.jl")
 
-# This patches JuliaInterpreter.jl to use our private copy of CodeTracking.jl
-filename_of_juliainterpreter = joinpath(@__DIR__, "packages", "JuliaInterpreter", "src", "JuliaInterpreter.jl")
-filename_of_codetracking = joinpath(@__DIR__, "packages", "CodeTracking", "src", "CodeTracking.jl")
-filename_of_codetracking = replace(filename_of_codetracking, "\\"=>"\\\\")
-jlinterp_code = read(filename_of_juliainterpreter, String)
-jlinterp_code_patched = replace(jlinterp_code, "using CodeTracking"=>"include(\"$filename_of_codetracking\"); using .CodeTracking")
-withpath(filename_of_juliainterpreter) do
-    include_string(VSCodeDebugger, jlinterp_code_patched, filename_of_juliainterpreter)
-end
+using ..CodeTracking
+using ..JuliaInterpreter
 
-import .JuliaInterpreter
 import Sockets, Base64
 
 include("debugger_rcp.jl")
@@ -94,7 +86,7 @@ function startdebug(pipename)
 
         @debug "Finished debugging"
     finally
-        close(conn)
+close(conn)
     end
 end
 

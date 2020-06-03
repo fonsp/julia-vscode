@@ -5,8 +5,43 @@ import Base: display, redisplay
 import Dates
 
 include("../languageserver/packages/JSON/src/JSON.jl")
+include("../packages/OrderedCollections/src/OrderedCollections.jl")
+include("../debugger/packages/CodeTracking/src/CodeTracking.jl")
 
-include("gridviewer.jl")
+module JuliaInterpreter
+    using ..CodeTracking
+
+    include("../debugger/packages/JuliaInterpreter/src/core.jl")
+end
+
+module LoweredCodeUtils
+    using ..JuliaInterpreter
+    using ..JuliaInterpreter: SSAValue, SlotNumber, Frame
+    using ..JuliaInterpreter: @lookup, moduleof, pc_expr, step_expr!, is_global_ref, is_quotenode, whichtt,
+                        next_until!, finish_and_return!, get_return, nstatements, codelocation
+
+
+    include("../packages/LoweredCodeUtils/src/core.jl")
+end
+
+module Revise
+    using ..OrderedCollections
+    using ..CodeTracking
+    using ..JuliaInterpreter
+    using ..LoweredCodeUtils
+
+    using ..CodeTracking: PkgFiles, basedir, srcfiles
+    using ..JuliaInterpreter: whichtt, is_doc_expr, step_expr!, finish_and_return!, get_return
+    using ..JuliaInterpreter: @lookup, moduleof, scopeof, pc_expr, prepare_thunk, split_expressions,
+                        linetable, codelocs, LineTypes
+    using ..LoweredCodeUtils: next_or_nothing!, isanonymous_typedef
+    using ..CodeTracking: line_is_decl
+    using ..JuliaInterpreter: is_global_ref
+    using ..CodeTracking: basepath
+
+
+    include("../packages/Revise/src/core.jl")
+end
 
 module JSONRPC
     import ..JSON
@@ -14,6 +49,8 @@ module JSONRPC
 
     include("../packages/JSONRPC/src/core.jl")
 end
+
+include("gridviewer.jl")
 
 include("repl.jl")
 include("../debugger/debugger.jl")
@@ -185,10 +222,8 @@ run(conn_endpoint)
             show_result = params["showResultInREPL"]
 
             hideprompt() do
-                if isdefined(Main, :Revise) && isdefined(Main.Revise, :revise) && Main.Revise.revise isa Function
-                    let mode = get(ENV, "JULIA_REVISE", "auto")
-                        mode == "auto" && Main.Revise.revise()
-                    end
+                let mode = get(ENV, "JULIA_REVISE", "auto")
+                    mode == "auto" && Revise.revise()
                 end
                 if show_code
                     for (i,line) in enumerate(eachline(IOBuffer(source_code)))
@@ -465,7 +500,7 @@ vscodedisplay() = i -> vscodedisplay(i)
 if _vscodeserver.load_revise
     try
         @eval using Revise
-        Revise.async_steal_repl_backend()
+        _vscodeserver.Revise.async_steal_repl_backend()
     catch err
     end
 end

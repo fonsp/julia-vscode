@@ -37,3 +37,12 @@
 [submodule "scripts/packages/JSONRPC"]
 	path = scripts/packages/JSONRPC
 	url = https://github.com/julia-vscode/JSONRPC.jl.git
+[submodule "scripts/packages/LoweredCodeUtils"]
+	path = scripts/packages/LoweredCodeUtils
+	url = https://github.com/JuliaDebug/LoweredCodeUtils.jl.git
+[submodule "scripts/packages/OrderedCollections"]
+	path = scripts/packages/OrderedCollections
+	url = https://github.com/JuliaCollections/OrderedCollections.jl.git
+[submodule "scripts/packages/Revise"]
+	path = scripts/packages/Revise
+	url = https://github.com/timholy/Revise.jl.git
