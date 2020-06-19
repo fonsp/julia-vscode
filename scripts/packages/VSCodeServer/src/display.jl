@@ -1,3 +1,15 @@
+const repl_showingrid_notification_type = JSONRPC.NotificationType("repl/showingrid", String)
+
+function repl_showingrid_notification(conn, params::String)
+    try
+        var = Core.eval(Main, Meta.parse(params))
+
+        Base.invokelatest(internal_vscodedisplay, var)
+    catch err
+        Base.display_error(err, catch_backtrace())
+    end
+end
+
 struct InlineDisplay <: AbstractDisplay end
 
 function sendDisplayMsg(kind, data)

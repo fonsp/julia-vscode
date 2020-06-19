@@ -1,3 +1,14 @@
+JSONRPC.@dict_readable struct ReplWorkspaceItem <: JSONRPC.Outbound
+    head::String
+    id::Int
+    haschildren::Bool
+    lazy::Bool
+    icon::String
+    value::String
+    canshow::Bool
+    type::String
+end
+
 struct LazyTree
     head::String
     icon::String
@@ -183,6 +194,38 @@ function clear_lazy(ids = [])
             delete!(TREES, id)
         end
     end
+end
+
+const repl_getlazy_request_type = JSONRPC.RequestType("repl/getlazy", Int, Vector{ReplWorkspaceItem})
+repl_getlazy_request(conn, params::Int) = get_lazy(params)
+
+const repl_getvariables_request_type = JSONRPC.RequestType("repl/getvariables", Nothing, Vector{ReplWorkspaceItem})
+
+function repl_getvariables_request(conn, params::Nothing)
+    M = Main
+    variables = []
+    clear_lazy()
+
+    for n in names(M, all=true, imported=true)
+        !isdefined(M, n) && continue
+        Base.isdeprecated(M, n) && continue
+
+        x = getfield(M, n)
+        x === vscodedisplay && continue
+        x === VSCodeServer && continue
+        x === Main && continue
+
+        s = string(n)
+        startswith(s, "#") && continue
+        try
+            push!(variables, treerender(SubTree(s, wsicon(x), x)))
+        catch err
+            printstyled("Internal Error: ", bold = true, color = Base.error_color())
+            Base.display_error(err, catch_backtrace())
+        end
+    end
+
+    return variables
 end
 
 wsicon(::Any) = "symbol-variable"

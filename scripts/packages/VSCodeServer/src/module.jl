@@ -1,3 +1,11 @@
+const repl_loadedModules_request_type = JSONRPC.RequestType("repl/loadedModules", Nothing, Vector{String})
+
+repl_loadedModules_request(conn, params::Nothing) = string.(collect(get_modules()))
+
+const repl_isModuleLoaded_request_type = JSONRPC.RequestType("repl/isModuleLoaded", String, Bool)
+
+repl_isModuleLoaded_request(conn, params::String) = is_module_loaded(params)
+
 function module_from_string(mod)
     ms = split(mod, '.')
 
